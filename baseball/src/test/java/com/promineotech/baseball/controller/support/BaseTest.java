@@ -17,9 +17,4 @@ abstract class BaseTest {
     return String.format("http://localhost:%d/players", serverPort);
     
   }
-  
-  protected String getBaseUriForOrders() {
-    return String.format("http://localhost:%d/orders", serverPort);
-    
-  }
 }

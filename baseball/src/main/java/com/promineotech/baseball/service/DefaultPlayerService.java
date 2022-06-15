@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.promineotech.baseball.dao.PlayerDao;
-import com.promineotech.baseball.entity.Jeep;
-import com.promineotech.baseball.entity.JeepModel;
 import com.promineotech.baseball.entity.Player;
+import com.promineotech.baseball.entity.PlayerPosition;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,6 +33,24 @@ public class DefaultPlayerService implements PlayerService {
       throw new NoSuchElementException(msg);
     }
     
+    Collections.sort(players);
+    return players;
+    
+  }
+  
+  @Override
+  @Transactional (readOnly = false)
+  public List<Player> createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos, int team_fk) {
+    log.info("The createPlayers method was called with player_pk={}",
+    player_pk);
+    
+    List<Player> players = playerDao.createPlayer(player_pk, first_name, last_name, pos, team_fk);
+    
+    if(players.isEmpty()) {
+      String msg = String.format("No players were created with player_pk=%s", player_pk);
+      throw new NoSuchElementException(msg);
+    }
+    fetchPlayers(player_pk);
     Collections.sort(players);
     return players;
     

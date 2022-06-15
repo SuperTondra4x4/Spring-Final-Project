@@ -7,8 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
-import com.promineotech.baseball.entity.Jeep;
-import com.promineotech.baseball.entity.JeepModel;
 import com.promineotech.baseball.entity.Player;
 
 public class FetchPlayerTestSupport extends BaseTest {

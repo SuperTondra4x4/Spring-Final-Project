@@ -32,8 +32,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import com.promineotech.baseball.controller.support.FetchPlayerTestSupport;
-import com.promineotech.baseball.entity.Jeep;
-import com.promineotech.baseball.entity.JeepModel;
 import com.promineotech.baseball.entity.Player;
 import com.promineotech.baseball.service.PlayerService;
 import lombok.Getter;

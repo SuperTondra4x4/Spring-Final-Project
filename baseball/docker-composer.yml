@@ -11,7 +11,7 @@ services:
     restart: always
     environment:
       # These environment variables cause MySQL to create the users username/password
-      # root/root and dev/dev. It also creates a database named jeep.
+      # root/root and dev/dev. It also creates a database named baseball.
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: MyNewPass
       MYSQL_DATABASE: baseball
@@ -26,8 +26,8 @@ services:
       - baseball
 
   # Flyway is used to create the tables and populate them with data. The migration files are found in 
-  # src/functional-test/resources. The schema is applied first to create the tables (V1.0__Jeep_Schema.sql) and 
-  # then the data is applied in V1.1__Jeep_Data.sql. Note that these files are also applied for each functional
+  # src/functional-test/resources. The schema is applied first to create the tables (Baseball_Schema.sql) and 
+  # then the data is applied in Baseball_Data.sql. Note that these files are also applied for each functional
   # (integration) test using the @Sql annotation in the functional test classes.
   flyway:
     container_name: flyway
@@ -58,6 +58,6 @@ services:
 
 # Create a bridge network between the MySQL container and the Flyway container.
 networks:
-  jeep:
+  baseball:
     driver: bridge
     name: baseball-to-baseball

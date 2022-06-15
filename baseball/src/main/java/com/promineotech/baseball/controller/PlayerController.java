@@ -1,18 +1,15 @@
 package com.promineotech.baseball.controller;
 
 import java.util.List;
-import javax.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.promineotech.baseball.Constants;
-import com.promineotech.baseball.entity.Jeep;
-import com.promineotech.baseball.entity.JeepModel;
 import com.promineotech.baseball.entity.Player;
+import com.promineotech.baseball.entity.PlayerPosition;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,8 +20,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 
 @Validated
-@RequestMapping("/jeeps")
-@OpenAPIDefinition(info = @Info(title = "Jeep Sales Service"), servers = { @Server(url = "http://localhost:8080", description = "Local server.")})
+@RequestMapping("/players")
+@OpenAPIDefinition(info = @Info(title = "Player Service"), servers = { @Server(url = "http://localhost:8080", description = "Local server.")})
 
 public interface PlayerController {
   
@@ -63,4 +60,10 @@ public interface PlayerController {
   @ResponseStatus(code = HttpStatus.OK)
   List<Player> fetchPlayers(
       @RequestParam(required = false) int player_pk);
+
+  @PostMapping
+  @ResponseStatus(code = HttpStatus.OK)
+  List<Player> createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos,
+      int team_fk);
 }
+

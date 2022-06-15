@@ -1,8 +1,8 @@
 spring:
   datasource:
-    password: jeep
-    username: jeep
-    url: jdbc:mysql://localhost:3306/jeep
+    password: MyNewPass
+    username: root
+    url: jdbc:mysql://localhost:3306/baseball
 logging:
   level:
    root: warn

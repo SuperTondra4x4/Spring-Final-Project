@@ -16,7 +16,7 @@ CREATE TABLE teams (
 
 CREATE TABLE players (
   player_pk int NOT NULL AUTO_INCREMENT,
-  player_position enum('P','C','1B','2B','3B','SS','LF','CF','RF','DH') NOT NULL,
+  player_position enum('PITCHER','CATCHER','FIRST','SECOND','THIRD','SHORT','LEFT','CENTER','RIGHT','DESIGNATED') NOT NULL,
   first_name varchar(40) NOT NULL,
   last_name varchar(40) NOT NULL,
   team_fk int not null,
@@ -54,7 +54,7 @@ CREATE TABLE plate_appearances (
   pa_pk int NOT NULL AUTO_INCREMENT,
   pitcher_fk int NOT NULL,
   batter_fk int NOT NULL,
-  pa_result enum ('O', '1B', '2B', '3B', 'HR') NOT NULL,
+  pa_result enum ('OUT', 'SINGLE', 'DOUBLE', 'TRIPLE', 'HOMER') NOT NULL,
   game_fk int not null,
   inning decimal(2,1) not null,
   runs int,
