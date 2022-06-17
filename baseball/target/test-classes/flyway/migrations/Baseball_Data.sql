@@ -1,3 +1,5 @@
+use baseball;
+
 -- Teams --
 INSERT INTO teams (team_location, team_name, wins, losses) VALUES('Minnesota', 'Twins', 2, 0);
 INSERT INTO teams (team_location, team_name, wins, losses) VALUES('Detroit', 'Tigers', 1, 1);

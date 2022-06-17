@@ -8,7 +8,11 @@ public interface PlayerService {
 
   List<Player> fetchPlayers(int player_pk);
 
-  List<Player> createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos,
+  int createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos,
       int team_fk);
+
+  int updatePlayer(int player_pk, int team_fk);
+
+  int deletePlayer(int player_pk);
 
   }

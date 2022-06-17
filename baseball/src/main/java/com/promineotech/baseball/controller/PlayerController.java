@@ -3,8 +3,10 @@ package com.promineotech.baseball.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -63,7 +65,15 @@ public interface PlayerController {
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.OK)
-  List<Player> createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos,
+  int createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos,
       int team_fk);
+  
+  @PutMapping
+  @ResponseStatus(code = HttpStatus.OK)
+  int updatePlayer(int player_pk, int team_fk);
+
+  @DeleteMapping
+  @ResponseStatus(code = HttpStatus.OK)
+  int deletePlayer(int player_pk);
 }
 

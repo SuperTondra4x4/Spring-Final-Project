@@ -55,7 +55,8 @@ public class DefaultPlayerDao implements PlayerDao {
   }
   
   @Override
-  public List<Player> createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos, int team_fk) {
+  public int createPlayer(int player_pk, String first_name, String last_name, PlayerPosition pos, int team_fk) {
+    log.debug("Creating player...");
     log.debug("DAO: player_id {}", player_pk);
     
     String sql = ""
@@ -63,7 +64,6 @@ public class DefaultPlayerDao implements PlayerDao {
         + "players "
         + "(player_pk, first_name, last_name, team_fk, player_position) "
         + "VALUES ( :player_pk, :first_name, :last_name, :team_fk, :player_position )";
-//        + "VALUES (" + player_pk + ", '" + first_name + "', '" + last_name + "', " + team_fk + ", '" + pos.toString() + "')";
     
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("player_pk", player_pk);
@@ -74,23 +74,47 @@ public class DefaultPlayerDao implements PlayerDao {
     
     System.out.println(parameters);
 
-    return jdbcTemplate.query(sql, parameters,  
-        new RowMapper<>() {
-      
-      @Override
-      public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
-        
-        System.out.println("in mapRow");
-        // @formatter:off
-        return Player.builder()
-            .player_pk(rs.getInt("player_pk"))
-            .first_name(rs.getString("first_name"))
-            .last_name(rs.getString("last_name"))
-            .team_fk(rs.getInt("team_fk"))
-            .player_position(PlayerPosition.valueOf(rs.getString("player_position")))
-            .build();
-        // @formatter:on
-      }});
+    return jdbcTemplate.update(sql, parameters);  
+
+  }
+  
+  public int updatePlayer(int player_pk, int team_fk) {
+    log.debug("Updating player...");
+    log.debug("DAO: player_pk {}", player_pk);
+    log.debug("DAO: team_fk {}", team_fk);
+    
+    String sql = ""
+        + "UPDATE "
+        + "players "
+        + "SET team_fk = :team_fk "
+        + "WHERE player_pk = :player_pk";
+    
+    Map<String, Object> parameters = new HashMap<>();
+    parameters.put("player_pk", player_pk);
+    parameters.put("team_fk", team_fk);
+    
+    System.out.println(parameters);
+
+    return jdbcTemplate.update(sql, parameters);  
+
+  }
+  
+  public int deletePlayer(int player_pk) {
+    log.debug("Deleting player...");
+    log.debug("DAO: player_pk {}", player_pk);
+    
+    String sql = ""
+        + "DELETE FROM "
+        + "players "
+        + "WHERE player_pk = :player_pk";
+    
+    Map<String, Object> parameters = new HashMap<>();
+    parameters.put("player_pk", player_pk);
+    
+    System.out.println(parameters);
+
+    return jdbcTemplate.update(sql, parameters);  
+
   }
 
 }
