@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.promineotech.baseball.entity.Transaction;
-import com.promineotech.baseball.entity.TransactionType;
-
+import com.promineotech.baseball.entity.Team;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,28 +21,28 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 
 @Validated
-@RequestMapping("/transactions")
-@OpenAPIDefinition(info = @Info(title = "Transaction Service"), servers = { @Server(url = "http://localhost:8080", description = "Local server.")})
+@RequestMapping("/teams")
+@OpenAPIDefinition(info = @Info(title = "Team Service"), servers = { @Server(url = "http://localhost:8080", description = "Local server.")})
 
-public interface TransactionController {
-  
+public interface TeamController {
+
   // @formatter:off
   @Operation(
-      summary = "Returns a list of Transactions",
-      description = "Returns a list of Transactions",
+      summary = "Returns a Team",
+      description = "Returns a Team",
       responses = {
           @ApiResponse(
               responseCode = "200", 
-              description = "A list of Transactions is returned", 
+              description = "A Team is returned", 
               content = @Content(mediaType = "application/json", 
-              schema = @Schema(implementation = Transaction.class))),
+              schema = @Schema(implementation = Team.class))),
           @ApiResponse(
               responseCode = "400", 
               description = "The request parameters are invalid", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "404", 
-              description = "No Transactions were found with the input criteria", 
+              description = "No Teams were found with the input criteria", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "500", 
@@ -52,33 +50,33 @@ public interface TransactionController {
               content = @Content(mediaType = "application/json"))
       },
       parameters = {
-          @Parameter(name = "transaction_pk", allowEmptyValue = false, required = false, description = "The transaction ID (i.e. '1')"),
+          @Parameter(name = "team_pk", allowEmptyValue = false, required = false, description = "The team ID (i.e. '1')"),
           
       }
     )
   //formatter:on
   @GetMapping
   @ResponseStatus(code = HttpStatus.OK)
-  List<Transaction> fetchTransactions(
-      @RequestParam(required = false) int transaction_pk);
+  List<Team> fetchTeams(
+      @RequestParam(required = false) int team_pk);
   
   // @formatter:off
   @Operation(
-      summary = "Creates a Transaction",
-      description = "Creates a Transaction",
+      summary = "Creates a Team",
+      description = "Creates a Team",
       responses = {
           @ApiResponse(
               responseCode = "200", 
-              description = "A Transaction is created", 
+              description = "A Team was created", 
               content = @Content(mediaType = "application/json", 
-              schema = @Schema(implementation = Transaction.class))),
+              schema = @Schema(implementation = Team.class))),
           @ApiResponse(
               responseCode = "400", 
               description = "The request parameters are invalid", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "404", 
-              description = "No Transactions were found with the input criteria", 
+              description = "The input criteria were not able to create a Team", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "500", 
@@ -86,7 +84,7 @@ public interface TransactionController {
               content = @Content(mediaType = "application/json"))
       },
       parameters = {
-          @Parameter(name = "transaction_pk", allowEmptyValue = false, required = false, description = "The transaction ID (i.e. '1')"),
+          @Parameter(name = "team_pk", allowEmptyValue = false, required = false, description = "The team ID (i.e. '1')"),
           
       }
     )
@@ -94,31 +92,26 @@ public interface TransactionController {
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.OK)
-  int createTransaction(int transaction_pk, int player_1_fk, int player_2_fk, int player_1_team_fk, int player_2_team_fk, TransactionType transaction_type);
-  
-
-  
-  @PutMapping
-  @ResponseStatus(code = HttpStatus.OK)
-  int updateTransaction(int transaction_pk, int player_1_fk, int player_2_fk);
+  int createTeam(int team_pk, String team_location, String team_name, int wins,
+      int losses);
   
   // @formatter:off
   @Operation(
-      summary = "Deletes a Transaction",
-      description = "Deletes a Transaction",
+      summary = "Modifies a Team",
+      description = "Modifies a Team",
       responses = {
           @ApiResponse(
               responseCode = "200", 
-              description = "The Transaction was deleted", 
+              description = "A Team is modified", 
               content = @Content(mediaType = "application/json", 
-              schema = @Schema(implementation = Transaction.class))),
+              schema = @Schema(implementation = Team.class))),
           @ApiResponse(
               responseCode = "400", 
               description = "The request parameters are invalid", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "404", 
-              description = "No Transactions were found with the input criteria", 
+              description = "No Teams were found with the input criteria", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "500", 
@@ -126,17 +119,48 @@ public interface TransactionController {
               content = @Content(mediaType = "application/json"))
       },
       parameters = {
-          @Parameter(name = "transaction_pk", allowEmptyValue = false, required = false, description = "The transaction ID (i.e. '1')"),
+          @Parameter(name = "team_pk", allowEmptyValue = false, required = false, description = "The team ID (i.e. '1')"),
           
       }
     )
   //formatter:on
   
+  @PutMapping
+  @ResponseStatus(code = HttpStatus.OK)
+  int updateTeam(int team_pk, String team_location);
+  
+  // @formatter:off
+  @Operation(
+      summary = "Deletes a Team",
+      description = "Deletes a Team",
+      responses = {
+          @ApiResponse(
+              responseCode = "200", 
+              description = "A Team is deleted", 
+              content = @Content(mediaType = "application/json", 
+              schema = @Schema(implementation = Team.class))),
+          @ApiResponse(
+              responseCode = "400", 
+              description = "The request parameters are invalid", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(
+              responseCode = "404", 
+              description = "No Teams were found with the input criteria", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(
+              responseCode = "500", 
+              description = "An unplanned error occured", 
+              content = @Content(mediaType = "application/json"))
+      },
+      parameters = {
+          @Parameter(name = "team_pk", allowEmptyValue = false, required = false, description = "The team ID (i.e. '1')"),
+          
+      }
+    )
+  //formatter:on
+
   @DeleteMapping
   @ResponseStatus(code = HttpStatus.OK)
-  int deleteTransaction(int transaction_pk);
-//formatter:off
-
-
+  int deleteTeam(int team_pk);
 }
 

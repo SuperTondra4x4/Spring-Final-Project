@@ -32,12 +32,12 @@ public interface GameController {
 
   // @formatter:off
   @Operation(
-      summary = "Returns a list of Games",
-      description = "Returns a list of Games",
+      summary = "Returns a Game",
+      description = "Returns a Game",
       responses = {
           @ApiResponse(
               responseCode = "200", 
-              description = "A list of Games is returned", 
+              description = "A Games is returned", 
               content = @Content(mediaType = "application/json", 
               schema = @Schema(implementation = Game.class))),
           @ApiResponse(
@@ -79,7 +79,7 @@ public interface GameController {
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "404", 
-              description = "No Games were found with the input criteria", 
+              description = "No Games were able to be created with the input criteria", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(
               responseCode = "500", 
@@ -96,9 +96,65 @@ public interface GameController {
   @ResponseStatus(code = HttpStatus.OK)
   int createGame(int game_pk, int team_1_fk, int team_2_fk, GameResult team_1_result, GameResult team_2_result);
   
+  @Operation(
+      summary = "Modifies a Game",
+      description = "Modifies a Game",
+      responses = {
+          @ApiResponse(
+              responseCode = "200", 
+              description = "A Game was modified", 
+              content = @Content(mediaType = "application/json", 
+              schema = @Schema(implementation = Game.class))),
+          @ApiResponse(
+              responseCode = "400", 
+              description = "The request parameters are invalid", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(
+              responseCode = "404", 
+              description = "No Games were able to be modified with the input criteria", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(
+              responseCode = "500", 
+              description = "An unplanned error occured", 
+              content = @Content(mediaType = "application/json"))
+      },
+      parameters = {
+          @Parameter(name = "game_pk", allowEmptyValue = false, required = false, description = "The game ID (i.e. '1')"),
+          
+      }
+    )
+  
   @PutMapping
   @ResponseStatus(code = HttpStatus.OK) 
   int updateGame(int game_pk, GameResult team_1_result, GameResult team_2_result);
+  
+  @Operation(
+      summary = "Deletes a Game",
+      description = "Deletes a Game",
+      responses = {
+          @ApiResponse(
+              responseCode = "200", 
+              description = "A Game was deleted", 
+              content = @Content(mediaType = "application/json", 
+              schema = @Schema(implementation = Game.class))),
+          @ApiResponse(
+              responseCode = "400", 
+              description = "The request parameters are invalid", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(
+              responseCode = "404", 
+              description = "No Games were able to be deleted with the input criteria", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(
+              responseCode = "500", 
+              description = "An unplanned error occured", 
+              content = @Content(mediaType = "application/json"))
+      },
+      parameters = {
+          @Parameter(name = "game_pk", allowEmptyValue = false, required = false, description = "The game ID (i.e. '1')"),
+          
+      }
+    )
   
   @DeleteMapping
   @ResponseStatus(code = HttpStatus.OK)
