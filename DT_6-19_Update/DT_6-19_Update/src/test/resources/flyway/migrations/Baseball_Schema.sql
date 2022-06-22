@@ -1,8 +1,11 @@
+USE baseball;
+
 SET FOREIGN_KEY_CHECKS=0; DROP table if exists teams; SET FOREIGN_KEY_CHECKS=1;
 SET FOREIGN_KEY_CHECKS=0; DROP TABLE if exists players; SET FOREIGN_KEY_CHECKS=1;
 SET FOREIGN_KEY_CHECKS=0; DROP TABLE if exists transactions; SET FOREIGN_KEY_CHECKS=1;
 SET FOREIGN_KEY_CHECKS=0; DROP TABLE if exists games; SET FOREIGN_KEY_CHECKS=1;
 SET FOREIGN_KEY_CHECKS=0; DROP TABLE if exists plate_appearances; SET FOREIGN_KEY_CHECKS=1;
+
 
 
 CREATE TABLE teams (
@@ -16,7 +19,7 @@ CREATE TABLE teams (
 
 CREATE TABLE players (
   player_pk int NOT NULL AUTO_INCREMENT,
-  player_position enum('PITCHER','CATCHER','FIRST','SECOND','THIRD','SHORT','LEFT','CENTER','RIGHT','DESIGNATED') NOT NULL,
+  player_position enum('P','C','1B','2B','3B','SS','LF','CF','RF','DH') NOT NULL,
   first_name varchar(40) NOT NULL,
   last_name varchar(40) NOT NULL,
   team_fk int not null,
@@ -30,7 +33,7 @@ CREATE TABLE transactions (
   player_2_fk int,
   player_1_team_fk int NOT NULL,
   player_2_team_fk int,
-  transaction_type enum('SIGN', 'TRADE', 'RELEASE') not NULL,
+  transaction_type enum('Sign', 'Trade', 'Release') not NULL,
   PRIMARY KEY (transaction_pk),
   FOREIGN KEY (player_1_team_fk) REFERENCES teams (team_pk),
   FOREIGN KEY (player_1_fk) REFERENCES players (player_pk),
@@ -54,7 +57,7 @@ CREATE TABLE plate_appearances (
   pa_pk int NOT NULL AUTO_INCREMENT,
   pitcher_fk int NOT NULL,
   batter_fk int NOT NULL,
-  pa_result enum ('OUT', 'SINGLE', 'DOUBLE', 'TRIPLE', 'HOMER') NOT NULL,
+  pa_result enum ('O', '1B', '2B', '3B', 'HR') NOT NULL,
   game_fk int not null,
   inning decimal(2,1) not null,
   runs int,
